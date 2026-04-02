@@ -72,6 +72,11 @@ button {
   border: none;
   cursor: pointer;
   font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.85;
 }
 
 /* Botão Copiar */
@@ -103,8 +108,15 @@ button.ghost {
 }
 
 .item {
-  border-bottom: 1px solid #333;
   padding: 10px 0;
+}
+
+body.dark .item {
+  border-bottom: 1px solid #333;
+}
+
+body.light .item {
+  border-bottom: 1px solid #ccc;
 }
 
 .item .head {
@@ -115,13 +127,22 @@ button.ghost {
 }
 
 .item pre.sql {
-  background: #111;
   padding: 8px;
   border-radius: 6px;
   font-family: Consolas, monospace;
   white-space: pre-wrap;
   word-break: break-word;
   overflow-x: auto;
+}
+
+body.dark .item pre.sql {
+  background: #111;
+  color: #e5e5e5;
+}
+
+body.light .item pre.sql {
+  background: #f0f0f0;
+  color: #222;
 }
 
 .actions {
@@ -163,11 +184,20 @@ button.ghost {
 }
 
 pre.sql.language-sql {
-  background: #111;
   padding: 8px;
   border-radius: 6px;
   font-family: Consolas, monospace;
   overflow-x: auto;
+}
+
+body.dark pre.sql.language-sql {
+  background: #111;
+  color: #e5e5e5;
+}
+
+body.light pre.sql.language-sql {
+  background: #f0f0f0;
+  color: #222;
 }
 
 .toast {
@@ -187,4 +217,50 @@ pre.sql.language-sql {
 
 .toast.show {
   opacity: 1;
+}
+
+/* Estilo para o campo de texto SQL */
+textarea {
+  min-height: 120px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  font-family: Consolas, monospace;
+  resize: vertical;
+}
+
+body.dark textarea {
+  background: #1e1e1e;
+  color: #e5e5e5;
+  border: 1px solid #555;
+}
+
+body.light textarea {
+  background: #fff;
+  color: #222;
+  border: 1px solid #ccc;
+}
+
+/* Estilo para o preview do SQL */
+#preview {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px dashed #666;
+  font-family: Consolas, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+body.dark #preview {
+  background: #111;
+  color: #e5e5e5;
+  border-color: #555;
+}
+
+body.light #preview {
+  background: #f0f0f0;
+  color: #222;
+  border-color: #ccc;
 }
