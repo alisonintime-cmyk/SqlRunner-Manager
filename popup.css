@@ -57,12 +57,12 @@ h1 {
 }
 
 button.cancel {
-  background: #b91c1c; /* vermelho suave */
+  background: #b91c1c;
   color: #fff;
 }
 
 button.save {
-  background: #059669; /* verde */
+  background: #059669;
   color: #fff;
 }
 
@@ -81,14 +81,14 @@ button:hover {
 
 /* Botão Copiar */
 button.copy {
-  background: #2563eb;   /* azul forte */
+  background: #2563eb;
   color: #fff;
   font-weight: bold;
 }
 
 /* Botão Excluir */
 button.del {
-  background: #dc2626;   /* vermelho forte */
+  background: #dc2626;
   color: #fff;
   font-weight: bold;
 }
@@ -151,6 +151,7 @@ body.light .item pre.sql {
   margin-top: 6px;
 }
 
+/* Modal overlay */
 .modal {
   position: fixed;
   inset: 0;
@@ -160,8 +161,19 @@ body.light .item pre.sql {
   justify-content: center;
 }
 
-.modal-card {
+/* Modal card */
+body.dark .modal-card {
   background: #2a2a2a;
+  color: #eee;
+}
+
+body.light .modal-card {
+  background: #fff;
+  color: #222;
+  border: 1px solid #ccc;
+}
+
+.modal-card {
   padding: 16px;
   border-radius: 8px;
   width: 90%;
@@ -183,6 +195,7 @@ body.light .item pre.sql {
   gap: 6px;
 }
 
+/* SQL preview */
 pre.sql.language-sql {
   padding: 8px;
   border-radius: 6px;
@@ -200,6 +213,7 @@ body.light pre.sql.language-sql {
   color: #222;
 }
 
+/* Toast */
 .toast {
   position: fixed;
   bottom: 20px;
@@ -219,7 +233,7 @@ body.light pre.sql.language-sql {
   opacity: 1;
 }
 
-/* Estilo para o campo de texto SQL */
+/* Campo de texto SQL */
 textarea {
   min-height: 120px;
   padding: 8px;
@@ -241,7 +255,7 @@ body.light textarea {
   border: 1px solid #ccc;
 }
 
-/* Estilo para o preview do SQL */
+/* Preview do SQL */
 #preview {
   margin-top: 8px;
   padding: 8px;
@@ -263,4 +277,19 @@ body.light #preview {
   background: #f0f0f0;
   color: #222;
   border-color: #ccc;
+}
+
+/* Inputs dentro do modal */
+body.dark #modal input,
+body.dark #modal textarea {
+  background: #333;
+  color: #eee;
+  border: 1px solid #555;
+}
+
+body.light #modal input,
+body.light #modal textarea {
+  background: #fff;
+  color: #222;
+  border: 1px solid #ccc;
 }
