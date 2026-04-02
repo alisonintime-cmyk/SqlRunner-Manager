@@ -60,17 +60,19 @@ function save() {
   if (editing === null) cmds.push(obj);
   else cmds[editing] = obj;
 
-  chrome.storage.sync.set({ sqlCommands: cmds }, () => {
-    render();
-    showToast("Comando salvo!");
-  });
+  // Usa salvarComandos para gravar em blocos
+  salvarComandos();
   closeModal();
 }
-
 /* Carregar */
 function loadCommands() {
-  chrome.storage.sync.get("sqlCommands", data => {
-    if (data.sqlCommands) cmds = data.sqlCommands;
+  chrome.storage.sync.get(null, data => {
+    cmds = [];
+    Object.keys(data).forEach(k => {
+      if (k.startsWith("sqlCommands_") && Array.isArray(data[k])) {
+        cmds = cmds.concat(data[k]);
+      }
+    });
     render();
   });
 }
@@ -132,12 +134,15 @@ function edit(i) {
 function del(i) {
   cmds.splice(i, 1);
   chrome.storage.sync.set({ sqlCommands: cmds }, () => {
-    render();
-    showToast("Comando excluído!");
+    chrome.storage.sync.get("sqlCommands", data => {
+      cmds = data.sqlCommands || [];
+      render();
+      showToast("Comando excluído!");
+    });
   });
 }
 
-/* Backup */
+/* Gerar Backup */
 function gerarBackup() {
   const blob = new Blob([JSON.stringify(cmds)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -149,22 +154,45 @@ function gerarBackup() {
   showToast("Backup gerado!");
 }
 
+/* Importar backup */
 function importarBackup(event) {
   const file = event.target.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
     try {
-      cmds = JSON.parse(e.target.result);
-      chrome.storage.sync.set({ sqlCommands: cmds }, () => {
-        render();
-        showToast("Backup importado! Comandos anteriores foram apagados.");
-      });
+      const parsed = JSON.parse(e.target.result);
+      let arr = Array.isArray(parsed) ? parsed : parsed.sqlCommands;
+      if (!Array.isArray(arr)) {
+        showToast("Formato inválido de backup!");
+        return;
+      }
+
+      cmds = arr; // atualiza array em memória
+
+      // Usa salvarComandos para gravar em blocos
+      salvarComandos();
+      showToast("Backup importado! Comandos anteriores foram apagados.");
     } catch {
       showToast("Arquivo inválido!");
     }
   };
   reader.readAsText(file);
+}
+
+/* Função auxiliar para salvar em blocos */
+function salvarComandos() {
+  const chunkSize = 20;
+  let obj = {};
+  for (let i = 0; i < cmds.length; i += chunkSize) {
+    obj["sqlCommands_" + (i / chunkSize)] = cmds.slice(i, i + chunkSize);
+  }
+
+  chrome.storage.sync.clear(() => {
+    chrome.storage.sync.set(obj, () => {
+      render();
+    });
+  });
 }
 
 /* Toast */
