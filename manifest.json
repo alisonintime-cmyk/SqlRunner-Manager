@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SqlRunner Manager",
-  "version": "1.0",
+  "version": "1.3",
   "description": "Gerenciador de comandos SQL com destaque de sintaxe, backup e importação.",
   "icons": {
     "48": "icon.png",
@@ -15,6 +15,8 @@
   },
   "permissions": [
     "storage",
-    "clipboardWrite"
+    "identity",
+    "clipboardWrite",
+    "tabs"
   ]
 }
