@@ -83,22 +83,27 @@ function render() {
   const list = document.getElementById("list");
   list.innerHTML = "";
 
-  cmds.filter(c => c.title.toLowerCase().includes(f) || c.sql.toLowerCase().includes(f))
-      .forEach((c, i) => {
-        const d = document.createElement("div");
-        d.className = "item";
-        d.innerHTML = `
-          <div class="head">
-            <span class="title">${c.title}</span>
-          </div>
-          <pre class="sql language-sql">${c.sql}</pre>
-          <div class="actions">
-            <button class="copy" data-i="${i}">Copiar</button>
-            <button class="edit" data-i="${i}">Editar</button>
-            <button class="del" data-i="${i}">Excluir</button>
-          </div>`;
-        list.appendChild(d);
-      });
+  // Filtramos os comandos
+  const filtered = cmds.filter(c => c.title.toLowerCase().includes(f) || c.sql.toLowerCase().includes(f));
+
+  filtered.forEach((c) => {
+    // IMPORTANTE: Pegamos o índice REAL do objeto dentro do array 'cmds' original
+    const realIndex = cmds.indexOf(c); 
+
+    const d = document.createElement("div");
+    d.className = "item";
+    d.innerHTML = `
+      <div class="head">
+        <span class="title">${c.title}</span>
+      </div>
+      <pre class="sql language-sql">${c.sql}</pre>
+      <div class="actions">
+        <button class="copy" data-i="${realIndex}">Copiar</button>
+        <button class="edit" data-i="${realIndex}">Editar</button>
+        <button class="del" data-i="${realIndex}">Excluir</button>
+      </div>`;
+    list.appendChild(d);
+  });
 
   list.querySelectorAll("pre.sql").forEach(el => {
     if (window.Prism) Prism.highlightElement(el);
@@ -132,14 +137,11 @@ function edit(i) {
 }
 
 function del(i) {
-  cmds.splice(i, 1);
-  chrome.storage.sync.set({ sqlCommands: cmds }, () => {
-    chrome.storage.sync.get("sqlCommands", data => {
-      cmds = data.sqlCommands || [];
-      render();
-      showToast("Comando excluído!");
-    });
-  });
+  if (confirm("Deseja realmente excluir este comando?")) {
+    cmds.splice(i, 1);
+    salvarComandos(); // Reaproveita a lógica de salvar em blocos
+    showToast("Comando excluído!");
+  }
 }
 
 /* Gerar Backup */
