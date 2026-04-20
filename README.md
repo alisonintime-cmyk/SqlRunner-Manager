@@ -8,11 +8,12 @@ Permite criar, editar, copiar, excluir e organizar comandos SQL com destaque de 
 ## 📦 Instalação
 
 1. Baixe e extraia o arquivo `SqlRunner Manager.zip` em uma pasta no seu computador (ex.: `C:\SqlRunner Manager`).
-2. Abra o navegador **Microsoft Edge**.
-3. Vá em **Menu (⋮) → Extensões → Gerenciar extensões**.
-4. Ative o **Modo desenvolvedor** (canto inferior esquerdo).
-5. Clique em **Carregar sem compactação**.
-6. Selecione a pasta onde você extraiu os arquivos.
+   <img width="953" height="788" alt="image" src="https://github.com/user-attachments/assets/92db0d64-7634-44b2-8706-4f49b6640c2c" />
+3. Abra o navegador **Microsoft Edge**.
+4. Vá em **Menu (⋮) → Extensões → Gerenciar extensões**.
+5. Ative o **Modo desenvolvedor** (canto inferior esquerdo).
+6. Clique em **Carregar sem compactação**.
+7. Selecione a pasta onde você extraiu os arquivos.
 
 A extensão será carregada e aparecerá na barra de ferramentas do Edge.
 
